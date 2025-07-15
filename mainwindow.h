@@ -12,6 +12,10 @@
 #include <QLineEdit>
 #include <QDateTimeEdit>
 #include <QComboBox>
+#include <QSlider>
+#include <QStackedLayout>
+#include <QTimer>
+#include <QEvent>
 #include "video_client_functions.hpp"
 
 class MainWindow : public QMainWindow {
@@ -26,6 +30,19 @@ private slots:
     void onPlayClicked();
     void onVideoSelected();
     void onVideoDoubleClicked();
+    
+    // Video control slots
+    void onPlayPauseClicked();
+    void onBackwardClicked();
+    void onForwardClicked();
+    void onPositionChanged(qint64 position);
+    void onDurationChanged(qint64 duration);
+    void onSliderMoved(int position);
+    void showVideoControls();
+    void hideVideoControls();
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
 private:
     void setupUI();
@@ -53,6 +70,16 @@ private:
     QPushButton* m_playBtn;
     QProgressBar* m_progressBar;
     QLabel* m_statusLabel;
+    
+    // Video Controls
+    QWidget* m_videoControlsWidget;
+    QPushButton* m_playPauseBtn;
+    QPushButton* m_backwardBtn;
+    QPushButton* m_forwardBtn;
+    QSlider* m_positionSlider;
+    QLabel* m_timeLabel;
+    QTimer* m_hideControlsTimer;
+    QWidget* m_videoContainer;
     
     // Client
     VideoClient* m_videoClient;
