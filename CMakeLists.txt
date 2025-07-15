@@ -25,14 +25,22 @@ find_package(Qt6Mqtt REQUIRED)
 qt6_standard_project_setup()
 
 qt6_add_executable(video_client
-    main.cpp
-    mainwindow.cpp
-    mainwindow.h
-    videoplayer.cpp
-    videoplayer.h
-    mqtt.cpp
-    mqtt.h
-    video_client_functions.hpp
+    src/core/main.cpp
+    src/ui/mainwindow.cpp
+    include/ui/mainwindow.h
+    src/video/videoplayer.cpp
+    include/video/videoplayer.h
+    src/network/mqtt.cpp
+    include/network/mqtt.h
+    include/core/video_client_functions.hpp
+)
+
+# 헤더 파일 경로 추가
+target_include_directories(video_client PRIVATE
+    include/core
+    include/ui
+    include/video
+    include/network
 )
 
 target_link_libraries(video_client PRIVATE

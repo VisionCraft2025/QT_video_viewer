@@ -10,8 +10,8 @@
 #include <QLineEdit>
 #include <QDateTimeEdit>
 #include <QComboBox>
-#include "video_client_functions.hpp"
-#include "videoplayer.h"
+#include "../core/video_client_functions.hpp"
+#include "../video/videoplayer.h"
 
 /**
  * @brief 메인 애플리케이션 창 - 비디오 목록 조회 및 관리

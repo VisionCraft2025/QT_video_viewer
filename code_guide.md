@@ -6,7 +6,7 @@
 
 ## 주요 클래스 구조
 
-### 1. MainWindow (mainwindow.h/cpp)
+### 1. MainWindow (include/ui/mainwindow.h, src/ui/mainwindow.cpp)
 - **역할**: 메인 애플리케이션 창, 비디오 목록 관리
 - **주요 기능**:
   - 비디오 검색 필터 UI (디바이스, 에러 ID, 시간 범위)
@@ -17,7 +17,7 @@
   - `QListWidget* m_videoList`: 비디오 목록 위젯
   - `QList<VideoPlayer*> m_videoPlayers`: 열린 비디오 플레이어 창들
 
-### 2. VideoPlayer (videoplayer.h/cpp)
+### 2. VideoPlayer (include/video/videoplayer.h, src/video/videoplayer.cpp)
 - **역할**: 독립적인 비디오 재생 창
 - **주요 기능**:
   - 비디오 파일 재생
@@ -28,7 +28,7 @@
   - `QVideoWidget* m_videoWidget`: 비디오 출력 위젯
   - `QSlider* m_positionSlider`: 재생 위치 슬라이더
 
-### 3. VideoClient (video_client_functions.hpp)
+### 3. VideoClient (include/core/video_client_functions.hpp)
 - **역할**: 서버와의 HTTP 통신 및 비디오 관리
 - **주요 기능**:
   - 비디오 목록 조회 API 호출
@@ -82,11 +82,24 @@
 
 ```
 client/
-├── main.cpp                    # 애플리케이션 진입점
-├── mainwindow.h/cpp           # 메인 창 (비디오 목록 관리)
-├── videoplayer.h/cpp          # 비디오 재생 창
-├── mqtt.h/cpp                 # MQTT 클라이언트 (향후 확장용)
-├── video_client_functions.hpp # HTTP 클라이언트 및 유틸리티
+├── src/                       # 소스 파일들
+│   ├── core/
+│   │   └── main.cpp          # 애플리케이션 진입점
+│   ├── ui/
+│   │   └── mainwindow.cpp    # 메인 창 구현
+│   ├── video/
+│   │   └── videoplayer.cpp   # 비디오 재생 창 구현
+│   └── network/
+│       └── mqtt.cpp          # MQTT 클라이언트 구현
+├── include/                   # 헤더 파일들
+│   ├── core/
+│   │   └── video_client_functions.hpp # HTTP 클라이언트 및 유틸리티
+│   ├── ui/
+│   │   └── mainwindow.h      # 메인 창 헤더
+│   ├── video/
+│   │   └── videoplayer.h     # 비디오 재생 창 헤더
+│   └── network/
+│       └── mqtt.h            # MQTT 클라이언트 헤더
 ├── CMakeLists.txt             # 빌드 설정
 └── build*.sh                  # 빌드 스크립트들
 ```
@@ -108,14 +121,31 @@ client/
 ## 개발 가이드라인
 
 ### 1. 새로운 기능 추가시
-- VideoClient 클래스에 서버 통신 로직 추가
-- MainWindow에 UI 컨트롤 추가
-- 필요시 별도 창으로 기능 분리
+- **핵심 로직**: `include/core/`에 헤더, `src/core/`에 구현
+- **UI 관련**: `include/ui/`에 헤더, `src/ui/`에 구현
+- **비디오 처리**: `include/video/`에 헤더, `src/video/`에 구현
+- **네트워크 통신**: `include/network/`에 헤더, `src/network/`에 구현
 
-### 2. 메모리 관리
+### 2. 파일 명명 규칙
+- 헤더 파일: `.h` (Qt 클래스), `.hpp` (템플릿/인라인 함수)
+- 소스 파일: `.cpp`
+- 클래스명과 파일명 일치 (예: `MainWindow` → `mainwindow.h/cpp`)
+
+### 3. Include 경로 규칙
+- 소스 파일에서 헤더 포함: `#include "../../include/category/header.h"`
+- 헤더 파일 간 포함: `#include "../category/header.h"`
+- CMakeLists.txt에서 include 디렉토리 설정으로 간소화 가능
+
+### 4. 메모리 관리
 - Qt의 부모-자식 관계 활용
 - 동적 생성된 VideoPlayer는 MainWindow에서 추적
 
-### 3. 에러 처리
+### 5. 에러 처리
 - 네트워크 에러는 사용자에게 명확히 표시
 - 다운로드 실패시 적절한 복구 메커니즘 제공
+
+### 6. 새 모듈 추가 절차
+1. 해당 카테고리 폴더에 헤더/소스 파일 생성
+2. CMakeLists.txt에 파일 경로 추가
+3. 필요한 include 경로 설정
+4. 의존성 있는 다른 파일들의 include 문 업데이트

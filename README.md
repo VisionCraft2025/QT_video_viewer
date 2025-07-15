@@ -284,21 +284,40 @@ sudo apt remove qt6-multimedia-dev libqt6multimedia6-dev
 
 ## 5. 디렉토리 구조
 
+### 프로젝트 구조 (Qt Creator 스타일)
+
 ```
 client/
-├── build.sh              # x86-64 빌드 스크립트
-├── build_rpi.sh          # ARM64 빌드 스크립트
-├── CMakeLists.txt        # CMake 설정
-├── main.cpp              # 메인 함수
-├── mainwindow.cpp        # 메인 윈도우 구현
-├── mainwindow.h          # 메인 윈도우 헤더
-├── videoplayer.cpp       # 비디오 플레이어 구현
-├── videoplayer.h         # 비디오 플레이어 헤더
-├── mqtt.cpp              # MQTT 클라이언트 구현
-├── mqtt.h                # MQTT 클라이언트 헤더
-├── video_client_functions.hpp  # 비디오 클라이언트 기능
-└── README.md             # 이 파일
+├── src/                       # 소스 파일들
+│   ├── core/
+│   │   └── main.cpp          # 메인 함수
+│   ├── ui/
+│   │   └── mainwindow.cpp    # 메인 윈도우 구현
+│   ├── video/
+│   │   └── videoplayer.cpp   # 비디오 플레이어 구현
+│   └── network/
+│       └── mqtt.cpp          # MQTT 클라이언트 구현
+├── include/                   # 헤더 파일들
+│   ├── core/
+│   │   └── video_client_functions.hpp  # 비디오 클라이언트 기능
+│   ├── ui/
+│   │   └── mainwindow.h      # 메인 윈도우 헤더
+│   ├── video/
+│   │   └── videoplayer.h     # 비디오 플레이어 헤더
+│   └── network/
+│       └── mqtt.h            # MQTT 클라이언트 헤더
+├── build.sh                   # x86-64 빌드 스크립트
+├── build_rpi.sh              # ARM64 빌드 스크립트
+├── CMakeLists.txt            # CMake 설정
+└── README.md                 # 이 파일
 ```
+
+### 구조의 장점
+
+- **기능별 분리**: 코드가 기능에 따라 명확히 분리되어 유지보수 용이
+- **Qt Creator 호환**: IDE에서 프로젝트 탐색이 직관적
+- **헤더/소스 분리**: 인터페이스와 구현이 명확히 분리
+- **확장성**: 새로운 모듈 추가 시 해당 폴더에 배치 가능
 
 ## 6. 개발 환경 설정
 
@@ -318,6 +337,12 @@ client/
     "cmake.configureArgs": [
         "-DQt6Multimedia_DIR=${env:HOME}/dev/cpp_libs/qtmultimedia/install/lib/x86_64-linux-gnu/cmake/Qt6Multimedia",
         "-DQt6MultimediaWidgets_DIR=${env:HOME}/dev/cpp_libs/qtmultimedia/install/lib/x86_64-linux-gnu/cmake/Qt6MultimediaWidgets"
+    ],
+    "files.associations": {
+        "*.hpp": "cpp"
+    },
+    "C_Cpp.default.includePath": [
+        "${workspaceFolder}/include/**"
     ]
 }
 ```

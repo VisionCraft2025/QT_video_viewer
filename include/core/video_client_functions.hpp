@@ -14,8 +14,10 @@
 #include <QVideoWidget>
 #include <QProgressBar>
 #include <QLabel>
+#include <QListWidget>
+#include <QListWidgetItem>
 #include <functional>
-#include "mqtt.h"
+#include "../network/mqtt.h"
 
 using VideoDownloadCallback = std::function<void(bool success, const QString& local_path)>;
 

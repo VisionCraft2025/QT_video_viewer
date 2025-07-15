@@ -1,4 +1,4 @@
-#include "videoplayer.h"
+#include "../../include/video/videoplayer.h"
 #include <QUrl>
 #include <QMessageBox>
 #include <QFileInfo>
