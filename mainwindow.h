@@ -17,6 +17,7 @@
 #include <QTimer>
 #include <QEvent>
 #include "video_client_functions.hpp"
+#include "videoplayer.h"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -27,22 +28,8 @@ public:
 
 private slots:
     void onRefreshClicked();
-    void onPlayClicked();
     void onVideoSelected();
     void onVideoDoubleClicked();
-    
-    // Video control slots
-    void onPlayPauseClicked();
-    void onBackwardClicked();
-    void onForwardClicked();
-    void onPositionChanged(qint64 position);
-    void onDurationChanged(qint64 duration);
-    void onSliderMoved(int position);
-    void showVideoControls();
-    void hideVideoControls();
-
-protected:
-    bool eventFilter(QObject *obj, QEvent *event) override;
 
 private:
     void setupUI();
@@ -64,23 +51,13 @@ private:
     // Video List
     QListWidget* m_videoList;
     
-    // Playback
-    QVideoWidget* m_videoWidget;
-    QMediaPlayer* m_mediaPlayer;
-    QPushButton* m_playBtn;
+    // Status
     QProgressBar* m_progressBar;
     QLabel* m_statusLabel;
     
-    // Video Controls
-    QWidget* m_videoControlsWidget;
-    QPushButton* m_playPauseBtn;
-    QPushButton* m_backwardBtn;
-    QPushButton* m_forwardBtn;
-    QSlider* m_positionSlider;
-    QLabel* m_timeLabel;
-    QTimer* m_hideControlsTimer;
-    QWidget* m_videoContainer;
-    
     // Client
     VideoClient* m_videoClient;
+    
+    // Video players
+    QList<VideoPlayer*> m_videoPlayers;
 };

@@ -28,6 +28,8 @@ qt6_add_executable(video_client
     main.cpp
     mainwindow.cpp
     mainwindow.h
+    videoplayer.cpp
+    videoplayer.h
     mqtt.cpp
     mqtt.h
     video_client_functions.hpp
