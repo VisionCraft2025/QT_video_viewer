@@ -25,6 +25,7 @@ private slots:
     void onRefreshClicked();
     void onPlayClicked();
     void onVideoSelected();
+    void onVideoDoubleClicked();
 
 private:
     void setupUI();

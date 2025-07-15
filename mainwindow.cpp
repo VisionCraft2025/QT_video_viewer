@@ -85,6 +85,7 @@ void MainWindow::setupConnections() {
     connect(m_refreshBtn, &QPushButton::clicked, this, &MainWindow::onRefreshClicked);
     connect(m_playBtn, &QPushButton::clicked, this, &MainWindow::onPlayClicked);
     connect(m_videoList, &QListWidget::itemSelectionChanged, this, &MainWindow::onVideoSelected);
+    connect(m_videoList, &QListWidget::itemDoubleClicked, this, &MainWindow::onVideoDoubleClicked);
 }
 
 void MainWindow::onRefreshClicked() {
@@ -139,4 +140,8 @@ void MainWindow::onPlayClicked() {
 
 void MainWindow::onVideoSelected() {
     m_playBtn->setEnabled(m_videoList->currentItem() != nullptr);
+}
+
+void MainWindow::onVideoDoubleClicked() {
+    onPlayClicked();
 }
