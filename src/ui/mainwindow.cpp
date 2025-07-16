@@ -170,6 +170,13 @@ void MainWindow::populateVideoList(const QList<VideoInfo>& videos) {
         
         QListWidgetItem* item = new QListWidgetItem(itemText);
         item->setData(Qt::UserRole, video.http_url);
+        
+        // 디버그: HTTP URL 출력
+        qDebug() << "[DEBUG] Storing HTTP URL:" << video.http_url;
+        qDebug() << "[DEBUG] Video ID:" << video.video_id;
+        qDebug() << "[DEBUG] Device ID:" << video.device_id;
+        qDebug() << "[DEBUG] File Path:" << video.file_path;
+        
         item->setToolTip(QString("비디오 URL: %1\n파일 크기: %2\n재생 시간: %3")
                         .arg(video.http_url)
                         .arg(VideoClient::formatFileSize(video.file_size))
@@ -190,6 +197,11 @@ void MainWindow::onVideoDoubleClicked() {
     }
     
     QString httpUrl = currentItem->data(Qt::UserRole).toString();
+    
+    // 디버그: 더블클릭시 HTTP URL 출력
+    qDebug() << "[DEBUG] Double-clicked video HTTP URL:" << httpUrl;
+    qDebug() << "[DEBUG] Item text:" << currentItem->text();
+    
     if (httpUrl.isEmpty()) {
         QMessageBox::warning(this, "Invalid Video", "비디오 URL이 유효하지 않습니다.");
         return;

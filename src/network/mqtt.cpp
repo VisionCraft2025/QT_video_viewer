@@ -119,6 +119,15 @@ void MqttClient::onMessageReceived(const QByteArray &message, const QMqttTopicNa
         video.file_size = obj["file_size"].toVariant().toLongLong();
         video.video_created_time = obj["video_created_time"].toVariant().toLongLong();
         video.video_quality = obj["video_quality"].toString();
+        
+        // 디버그: MQTT 응답에서 파싱된 HTTP URL 출력
+        qDebug() << "[DEBUG] Parsed from MQTT response:";
+        qDebug() << "  - Video ID:" << video.video_id;
+        qDebug() << "  - Device ID:" << video.device_id;
+        qDebug() << "  - File Path:" << video.file_path;
+        qDebug() << "  - HTTP URL:" << video.http_url;
+        qDebug() << "  - Raw JSON http_url:" << obj["http_url"];
+        
         videos.append(video);
     }
     
