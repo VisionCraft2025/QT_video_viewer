@@ -346,19 +346,3 @@ client/
     ]
 }
 ```
-
-## 라이센스
-
-이 프로젝트는 MIT 라이센스 하에 배포됩니다.
-
-## 기여하기
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-## 문제 신고
-
-버그나 기능 요청은 GitHub Issues를 통해 신고해 주세요.
